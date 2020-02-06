@@ -8,6 +8,8 @@ Created on Sun Sep 22 22:46:10 2019
 import csv
 from pretty_print import pretty_print3 ## print out formatting
 
+# Stock data was stored in separate csv file by running collectDividendHistory.py
+# Assume they are stored at ./stockDB/dividen/symbol.csv
 map = {}
 with open('./zacks_custom_screen_2019-09-12.csv') as stockList:
     readList = csv.reader(stockList, delimiter=',')
@@ -22,9 +24,10 @@ with open('./zacks_custom_screen_2019-09-12.csv') as stockList:
                 date = row[0].split('-')
                 dividend = float(row[1])
                 yearMonth = date[0]+date[1]
+                # Store dividend data hash table based on the distribution month and year as key
                 dict[yearMonth] = {'dividend':dividend}
                 
-        
+                # Round up distribution date to the following month 
                 if(date[1] == '12'):
                     date[1] = '01'
                     date[0] = str(int(date[0])+1)
@@ -33,15 +36,19 @@ with open('./zacks_custom_screen_2019-09-12.csv') as stockList:
                     if(len(date[1]) == 1):
                         date[1] = '0' + date[1]
         
+                # Open stock historical price data
                 with open('./stockDB/price/'+symbol+'.csv') as csvfile2:
                     readCSV2 = csv.reader(csvfile2, delimiter=',')
                     for row2 in readCSV2:
+                        # Skip header row
                         if(row2[0] == 'Date'): 
                             continue
                         date2 = row2[0].split('-')
+                        # Store stock price data hash table based on the distribution month and year as key
                         if(date[0]+date[1] == date2[0]+date2[1]):
                             dict[yearMonth]['price'] = float(row2[1])
         
+        # Dump hash table into 2D array
         c, r = 5, len(dict);
         array = []
         for i in range(r):
@@ -84,6 +91,7 @@ for k in map.keys():
     pretty_print3(k, map[k])
 csv_or_not = input('Enter y to export to csv file，Enter other to exit：')
 
+# Generated stock list with growth rate (gain)
 if csv_or_not == 'y':
     csv = open('./stockFilterResult.csv', 'w+', encoding='utf-8')
     csv.write('Symbol,Gain,\n')
