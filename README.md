@@ -11,7 +11,7 @@
 * [Contact](#contact)
 
 ## General info
-Investment is important in our life. Among many investing options, stock is the easiest choice due to its higher liquidity and versatility. High dividand yielding stocks are attractive due to income, relative stability, dividend reinvestment and special tax rate. This project will collect the dividend history of stocks from internet and analyze the well performed stocks with high dividend. User can special the growing criteria based on the past user defined years of stock historical data.
+Investment is important in our life. Among many investing options, stock is the easiest choice due to its higher liquidity and versatility. High dividand yielding stocks are attractive due to income, relative stability, dividend reinvestment and special tax rate. This project will collect the dividend history of stocks from internet and analyze the well performed stocks with high dividend. User can specify the growing criteria based on the past user defined years of stock historical data.
 
 ## Screenshots
 ![First Popped Up Window]
@@ -27,7 +27,8 @@ Install Windows Anacodna3 Spyder, Selenium package, Chrome WebDriver. Load and r
 
 ## Features
 To-do list:
-* Launch the querying program every certain period of time and email the results if available.
+* Take impact of stock split into account
+* Compare the performance of major stock index growth rate in the same amount of period
 
 ## Status
 Project is:  _finished_ and can be enriched by completing the to-do list
