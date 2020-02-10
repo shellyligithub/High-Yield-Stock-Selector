@@ -10,6 +10,14 @@ from pretty_print import pretty_print3 ## print out formatting
 
 # Stock data was stored in separate csv file by running collectDividendHistory.py
 # Assume they are stored at ./stockDB/dividen/symbol.csv
+
+print('How many years of historical stock dividend data you would like to analyze?\n')
+yearToAnalyze= input('Enter the number for years:')
+print('your like to compare ' + yearToAnalyze + ' years of dividend data\n')
+
+targetGrowthRate= input('What is your target of growth rate? Ex: 2 for 200% \n')
+print('your criteria for growth rate is ' + targetGrowth
+
 map = {}
 with open('./zacks_custom_screen_2019-09-12.csv') as stockList:
     readList = csv.reader(stockList, delimiter=',')
@@ -71,24 +79,26 @@ with open('./zacks_custom_screen_2019-09-12.csv') as stockList:
             print(array[i])
             print
     
-        # 5 year gain
+        # user specified years of gain
         cur = array[len(array)-1]
         print(cur)
         if(cur[0] == '201909'):
             cur = array[len(array)-2]
         curYear = cur[0][0:4]
         curMonth = cur[0][4:]
-        fiveYearBack = str(int(curYear)-5)
+        previousYearBack = str(int(curYear)-int(yearToAnalyze))
+        prv = cur
         for i in range(len(array)):
-            if(array[i][0] == fiveYearBack + curMonth):
+            if(array[i][0] == previousYearBack + curMonth):
                 prv = array[i]
-        print(prv)
-        gain = cur[3]/prv[3]*cur[2]/prv[2]
-        print(symbol,gain)
-        map[symbol] = gain
+                print(prv)
+                gain = cur[3]/prv[3]*cur[2]/prv[2]
+                print(symbol,gain)
+                map[symbol] = gain
 
 for k in map.keys(): 
-    pretty_print3(k, map[k])
+    if(map[k] >= int(targetGrowthRate)):
+        pretty_print3(k, map[k])
 csv_or_not = input('Enter y to export to csv file，Enter other to exit：')
 
 # Generated stock list with growth rate (gain)
